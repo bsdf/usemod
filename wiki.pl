@@ -3179,7 +3179,7 @@ sub GetHiddenValue {
 }
 
 sub GetIP {
-  return $ENV{REMOTE_ADDR} || '127.0.0.1';
+  return $ENV{HTTP_X_REAL_IP} || $ENV{REMOTE_ADDR} || '127.0.0.1';
 }
 
 sub GetRemoteHost {
