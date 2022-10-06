@@ -4503,7 +4503,8 @@ sub DoMaintain {
     }
   }
   &RequestLock() or die(T('Could not get maintain-lock'));
-  foreach $name (&AllPagesList()) {
+  foreach my $unsafe_name (&AllPagesList()) {
+    my $name = &SanitizePageName($unsafe_name);
     &OpenPage($name);
     &OpenDefaultText();
     ($status, $message) = &ProcessVetos();
