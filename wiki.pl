@@ -65,6 +65,8 @@ use vars qw(%Page %Section %Text %InterSite %SaveUrl %SaveNumUrl
   $q $Now $UserID $TimeZoneOffset $ScriptName $BrowseCode $OtherCode
   $AnchoredLinkPattern @HeadingNumbers $TableOfContents $QuotedFullUrl
   $ConfigError $UploadPattern );
+# MY NEW OPTIONS
+our ($ParseISBN, $ParseRFC);
 
 # == Configuration =====================================================
 $DataDir     = "/tmp/mywikidb"; # Main wiki directory
@@ -199,6 +201,10 @@ $BracketImg   = 1;      # 1 = [url url.gif] becomes image link, 0 = no img
 # Single tags (that do not require a closing /tag)
 @HtmlSingle = qw(br p hr li dt dd tr td th);
 @HtmlPairs = (@HtmlPairs, @HtmlSingle);  # All singles can also be pairs
+
+# == MY NEW OPTIONS =======================================================
+$ParseISBN    = 0;                  # 1 = try to parse ISBN links 0 = don't
+$ParseRFC     = 0;                  # 1 = try to prse RFC links   0 = don't
 
 # == You should not have to change anything below this line. =============
 $IndentLimit = 20;                  # Maximum depth of nested lists
@@ -1751,8 +1757,10 @@ sub CommonMarkup {
       #      (subpage links without the main page)
       s/$LinkPattern/&GetPageOrEditLink($1, "")/geo;
     }
-    s/\b$RFCPattern/&StoreRFC($1)/geo;
-    s/\b$ISBNPattern/&StoreISBN($1)/geo;
+
+    s/\b$RFCPattern/&StoreRFC($1)/geo   if $ParseRFC;
+    s/\b$ISBNPattern/&StoreISBN($1)/geo if $ParseISBN;
+
     if ($ThinLine) {
       if ($OldThinLine) {  # Backwards compatible, conflicts with headers
         s/====+/<hr noshade="noshade" class="wikiline" size="2">/g;
