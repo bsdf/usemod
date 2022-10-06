@@ -65,13 +65,14 @@ use vars qw(%Page %Section %Text %InterSite %SaveUrl %SaveNumUrl
   $q $Now $UserID $TimeZoneOffset $ScriptName $BrowseCode $OtherCode
   $AnchoredLinkPattern @HeadingNumbers $TableOfContents $QuotedFullUrl
   $ConfigError $UploadPattern );
+
 # MY NEW OPTIONS
 our ($ParseISBN, $ParseRFC);
 
 # == Configuration =====================================================
-$DataDir     = "/tmp/mywikidb"; # Main wiki directory
-$UseConfig   = 1;       # 1 = use config file,    0 = do not look for config
-$ConfigFile  = "$DataDir/config";   # Configuration file
+$DataDir     = "/etc/usemod/data"; # Main wiki directory
+$UseConfig   = 1; # 1 = use config file,    0 = do not look for config
+$ConfigFile  = "/etc/usemod/config/usemod.cfg"; # Configuration file
 
 # Default configuration (used if UseConfig is 0)
 $CookieName  = "Wiki";          # Name for this wiki (for multi-wiki sites)
