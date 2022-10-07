@@ -2478,7 +2478,8 @@ sub OpenNewText {
 }
 
 sub GetPageFile {
-  my ($id) = @_;
+  my ($unsafe_id) = @_;
+  my $id = &SanitizePageName($unsafe_id);
 
   return $PageDir . "/" . &GetPageDirectory($id) . "/$id.db";
 }
